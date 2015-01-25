@@ -42,7 +42,7 @@ tweets_by_lang[:7].plot(ax=ax, kind='bar', color='red')
 #plt.show()
 
 #Tweet Mining
-##def word_in_text(word, text):
+#def word_in_text(word, text):
 ##    word = word.lover()
 ##    text = text.lover()
 ##    match = re.search(word,text)
@@ -64,6 +64,7 @@ tweets_by_lang[:7].plot(ax=ax, kind='bar', color='red')
 
 #s³owa kluczowe
 keyWords = []
+ball = []
 fball = myCollection.find({'text': {'$regex': 'football'}}).count()
 bball = myCollection.find({'text': {'$regex': 'basketball'}}).count()
 hockey = myCollection.find({'text': {'$regex': 'hockey'}}).count()
@@ -72,6 +73,22 @@ sport = myCollection.find({'text': {'$regex': 'sport'}}).count()
 stadium = myCollection.find({'text': {'$regex': 'stadium'}}).count()
 soccer = myCollection.find({'text': {'$regex': 'soccer'}}).count()
 
-keyWords = [fball, bball, hockey, soccer, tennis, sport, stadium]
-print 'fball, bball, hockey, soccer, tennis, sport, stadium'
-print keyWords
+#keyWords = [fball, bball, hockey, soccer, tennis, sport, stadium]
+#print 'fball, bball, hockey, soccer, tennis, sport, stadium'
+#print keyWords
+
+##ten = myCollection.find({'$and': [{'geom.type':'Point'}, {'text': {'$regex': 'tennis'}}]}).toArray()
+##for i in range(0, tennis):
+##    print ten(i)
+
+
+#dodaje do listy twitty ze s³owem tennis, i wybiera wspolrzedne	
+for item in myCollection.find({'text': {'$regex': 'tennis'}}):
+    ball.append(item)
+print ball[0]['geo']['coordinates']
+
+
+##geo = fball.coordintates
+##for i in range(0, len(ten)):
+##    geo.append(ten['geo'])
+##print geo
