@@ -65,13 +65,13 @@ tweets_by_lang[:7].plot(ax=ax, kind='bar', color='red')
 #s³owa kluczowe
 keyWords = []
 ball = []
-fball = myCollection.find({'text': {'$regex': 'football'}}).count()
-bball = myCollection.find({'text': {'$regex': 'basketball'}}).count()
-hockey = myCollection.find({'text': {'$regex': 'hockey'}}).count()
-tennis = myCollection.find({'text': {'$regex': 'tennis'}}).count()
-sport = myCollection.find({'text': {'$regex': 'sport'}}).count()
-stadium = myCollection.find({'text': {'$regex': 'stadium'}}).count()
-soccer = myCollection.find({'text': {'$regex': 'soccer'}}).count()
+##fball = myCollection.find({'text': {'$regex': 'football'}}).count()
+##bball = myCollection.find({'text': {'$regex': 'basketball'}}).count()
+##hockey = myCollection.find({'text': {'$regex': 'hockey'}}).count()
+##tennis = myCollection.find({'text': {'$regex': 'tennis'}}).count()
+##sport = myCollection.find({'text': {'$regex': 'sport'}}).count()
+##stadium = myCollection.find({'text': {'$regex': 'stadium'}}).count()
+##soccer = myCollection.find({'text': {'$regex': 'soccer'}}).count()
 
 #keyWords = [fball, bball, hockey, soccer, tennis, sport, stadium]
 #print 'fball, bball, hockey, soccer, tennis, sport, stadium'
@@ -83,12 +83,25 @@ soccer = myCollection.find({'text': {'$regex': 'soccer'}}).count()
 
 
 #dodaje do listy twitty ze s³owem tennis, i wybiera wspolrzedne	
-for item in myCollection.find({'text': {'$regex': 'tennis'}}):
+for item in myCollection.find({'$or': [{'text': {'$regex': 'football'}},{'text': {'$regex': 'basketball'}},{'text': {'$regex': 'hockey'}}, {'text': {'$regex': 'tennis'}},{'text': {'$regex': 'hockey'}},{'text': {'$regex': 'sport'}},{'text': {'$regex': 'stadium'}},{'text': {'$regex': 'soccer'}}]}):
     ball.append(item)
+
 print ball[0]['geo']['coordinates']
 
 
-##geo = fball.coordintates
-##for i in range(0, len(ten)):
-##    geo.append(ten['geo'])
-##print geo
+ball2 = []
+#drukuje wspolrzedne!!!!
+for i in range(0, len(ball)):
+    ball2=ball[i]['geo']['coordinates']
+#print ball2
+    
+tenis_plik = open('tenis.txt', 'w')
+for i in range(0, len(ball)):
+    ball2=str(ball[i]['geo']['coordinates'])+ '\n'
+    print ball2
+    tenis_plik.writelines(ball2)
+tenis_plik.close()
+
+
+#obiektySportowe = {'StaplesCenter': [34.043 , -118.267], 'GerstenPavilion': [33.967, -118.415]}
+#print obiektySportowe[1]
