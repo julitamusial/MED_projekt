@@ -189,10 +189,10 @@ class Klasteryzacja:
         # See if OK was pressed
         if result:
             
-            #otwiera plik tesktowy z wpolrzednymi wyjsciowymi i zapisuje do tablicy lon i lat
+            #otwiera plik tesktowy z wpolrzednymi wyjsciowymi Twittera i zapisuje do tablicy lon i lat
             szerokosc = []
             dlugosc = []
-            with open ('C:/Users/Jula/Desktop/tenis2.txt', 'r') as f:
+            with open ('C:/Users/Jula/.qgis2/python/plugins/Klasteryzacja/lotniskaWsp_OK.txt', 'r') as f:
                 for line in f:
                     lat = line.split(',')[0]
                     lat2 = float(lat.split('[')[1])
@@ -209,15 +209,48 @@ class Klasteryzacja:
             twitty.LayerData = twitty.dataProvider()
             twitty.startEditing()
             twitty.LayerData.addAttributes([QgsField('Id', QVariant.Int)])
+        
+            #dodanie obiektów do tabeli
+            for i in range (0, len(szerokosc)):
+                wpis = QgsFeature()
+                punkt = QgsPoint(dlugosc[i], szerokosc[i])
+                wpis.setGeometry(QgsGeometry.fromPoint(punkt))
+                #print punkt
+                #wpis.setAttributes('i')
+                twitty.addFeature(wpis)
+            twitty.commitChanges()
+            twitty.updateExtents()
+            QgsMapLayerRegistry.instance().addMapLayer(twitty)
             
             
+            #otwiera plik tesktowy z wpolrzednymi sklasteryzowanych lotnisk
+            szerokosc = []
+            dlugosc = []
+            with open ('C:/Users/Jula/.qgis2/python/plugins/Klasteryzacja/wczytywanie.txt', 'r') as f:
+                for line in f:
+                    lat = line.split(',')[0]
+                    lat2 = float(lat.split('[')[1])
+                    lon = line.split(',')[1]
+                    lon2 = float(lon.split(']')[0])
+                    #print lat2, lon2
+                    
+                    szerokosc.append(lat2)
+                    dlugosc.append(lon2)
+           # print szerokosc
+            #print dlugosc
+            #tworzenie nowej wartwy wektorowej
+            twitty = QgsVectorLayer('Point', 'wspLotnisk', 'memory')
+            twitty.LayerData = twitty.dataProvider()
+            twitty.startEditing()
+            twitty.LayerData.addAttributes([QgsField('Id', QVariant.Int)])
+        
             #dodanie obiektów do tabeli
             for i in range (0, len(szerokosc)):
                 wpis = QgsFeature()
                 punkt = QgsPoint(dlugosc[i], szerokosc[i])
                 wpis.setGeometry(QgsGeometry.fromPoint(punkt))
                 print punkt
-                wpis.setAttribute('i')
+                #wpis.setAttributes('i')
                 twitty.addFeature(wpis)
             twitty.commitChanges()
             twitty.updateExtents()
