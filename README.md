@@ -2,7 +2,7 @@
 
 Projekt semestralny z Metod Eksploracji Danych: 
 
-"Wykrywanie obiektów sportowych typu stadiony, boiska, hale sportowe według zagęszczenia wpisów na serwisie społecznościowym Twitter"
+"Możliwości lokalizacji obiektów na podstawie geolokalizacji wpisów na portalach społecznościowych na przykładzie lokalizacji lotnisk z serwisu społecznościowego Twitter"
 
 Wykonanie:
 * Aleksandra Knapik
